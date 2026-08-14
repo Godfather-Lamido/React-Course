@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Chatbot</title>
+</head>
+
+<body>
+  <div class="js-container"></div>
+
+  <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+  <script src="https://unpkg.com/supersimpledev/react.js"></script>
+  <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+  <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+  <script type="text/babel">
+
+    /*
+    function ProductDetails({ name, price, discountPrice, imageSrc }) {
+      return (
+        <div>
+          <img src={imageSrc} width="100" />
+          <p>{name}</p>
+          {discountPrice ? (
+            <>
+              <p><del>Price: ${price}</del></p>
+              <p>Discount price: ${discountPrice}</p>
+            </>
+          ) : (
+            <p>Price: ${price}</p>
+          )}
+          <button>Add to Cart</button>
+        </div>
+      );
+    }
+    /* <>
+      <p>{name}</p>
+      {discountPrice && (
+        <del><p>Price: ${price}</p></del>
+      )}
+      <p><del>Price: ${price}</del></p>
+      {discountPrice && (
+        <p>Discount price: ${discountPrice}</p>
+      )}
+      <button>Add to Cart</button>
+    </> 
+  );
+} */
+    /*
+    function App() {
+      return (
+        <>
+          <ProductDetails 
+            name="Cotton socks" 
+            price="10.90" 
+            discountPrice="5.45" 
+            imageSrc="cotton-socks.png"
+        />
+          <ProductDetails 
+            name="Tennis balls" 
+            price="6.00" 
+            imageSrc="tennis-balls.png"
+        />
+          <ProductDetails 
+            name="Plain T-Shirt" 
+            price="7.99" 
+            imageSrc="plain-t-shirt.png"
+        />
+        </>
+      );
+    }
+
+    const container = document.querySelector('.js-container');
+    ReactDOM.createRoot(container).render(<App />); */
+
+    /*
+    function App() {
+      return (
+        <>
+          <p>Hello, welcome to my website</p>
+          <div>
+            <input type="text" placeholder="Email" />
+          </div>
+          <div>
+            <input type="password" placeholder="Password" />
+          </div>
+          <button>Login</button>
+          <button>Sign up</button>
+        </>
+      );
+    } */
+
+    /*
+    function LoginForm() {
+      return (
+        <>
+          <div>
+            <input type="text" placeholder="Email" />
+          </div>
+          <div>
+            <input type="password" placeholder="Password" />
+          </div>
+          <button>Login</button>
+          <button>Sign up</button>
+        </>
+      );
+    }
+
+    function App() {
+      return (
+        <>
+          <p>Hello, welcome to my website</p>
+          <LoginForm />
+        </>
+      );
+    }
+
+    const container = document.querySelector('.js-container');
+    ReactDOM.createRoot(container).render(<App />); */
+
+
+    function Chatbot() {
+      return (
+        <>
+          <input
+            placeholder="Send a message to Chatbot"
+            size="30"
+          />
+          <button>Send</button>
+        </>
+      );
+    }
+
+
+    function ChatMessage({ message, sender }) {
+      // console.log(props);
+      // const message = props.message; //to access message attribute
+      // const sender = props.sender;
+      // const { message, sender } = props;
+
+
+      if (sender === 'robot') {
+        return (
+          <div>
+            <img src="robot.png" width="50" />
+            {message}
+          </div>
+        );
+      }
+
+
+      return (
+        <div>
+          {sender === 'robot' && (
+            <img src="robot.png" width="50" />
+          )}
+          {message}
+          {sender === 'user' && (
+            <img src="user.png" width="50" />
+          )}
+        </div>
+      );
+    }
+
+    function ChatMessages() {
+    
+      const [ chatMessages, setChatMessages ] = React.useState([{
+        message: 'hello chatbot',
+        sender: 'user',
+        id: 'id1'
+      },
+      {
+        message: 'Hello! How can I help you?',
+        sender: 'robot',
+        id: 'id2'
+      },
+      {
+        message: 'can you get me todays date?',
+        sender: 'user',
+        id: 'id3'
+      },
+      {
+        message: 'Today is July 29',
+        sender: 'robot',
+        id: 'id4'
+      }]);
+      // const [ chatMessages, setChatMessages ] = array;
+      // const chatMessages = array[0];
+      // const setChatMessages = array[1];
+
+      function sendMessage() {
+        setChatMessages([
+          ...chatMessages,
+          {
+            message: 'test',
+            sender: 'user',
+            id: crypto.randomUUID()
+          }
+        ])
+      }
+
+      return (
+        <>
+          <button onClick={sendMessage}>Send Message</button>
+
+          {chatMessages.map((chatMessage) => {
+            return (
+              <ChatMessage
+                message={chatMessage.message}
+                sender={chatMessage.sender}
+                key={chatMessage.id}
+              />
+            );
+          })}
+        </>
+      );
+    };
+
+
+    function App() {
+      return (
+        <>
+          <Chatbot />
+          <ChatMessages />
+        </>
+      );
+    }
+
+    const container = document.querySelector('.js-container');
+    // ReactDOM.createRoot(container).render('Welcome to SuperSimpleDev React Course');
+    ReactDOM.createRoot(container).render(<App />);
+
+  </script>
+</body>
+
+</html>

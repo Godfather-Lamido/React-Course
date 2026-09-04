@@ -1,237 +1,220 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <head>
+    <title>Chatbot</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
 
-<head>
-  <title>Chatbot</title>
-</head>
+      .send-button {
+        background-color: rgb(25, 135, 84);
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        margin-left: 10px;
+        font-size: 15px;
+        cursor: pointer;
+      }
 
-<body>
-  <div class="js-container"></div>
+      .chat-input {
+        padding: 12px 15px;
+        border-radius: 10px;
+        border-width: 1px;
+        font-size: 15px;
+        flex-grow: 1;
+      }
 
-  <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+      .chat-input-container {
+        display: flex;
+        margin-bottom: 60px;
+      }
 
-  <script src="https://unpkg.com/supersimpledev/react.js"></script>
-  <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+      .app-container {
+        max-width: 600px;
+        margin: 0px auto 0px auto;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
 
-  <script src="https://unpkg.com/supersimpledev/babel.js"></script>
-  <script type="text/babel">
+      .chat-message-user {
+        display: flex;
+        justify-content: end;
+        align-items: start;
+      }
 
-    /*
-    function ProductDetails({ name, price, discountPrice, imageSrc }) {
-      return (
-        <div>
-          <img src={imageSrc} width="100" />
-          <p>{name}</p>
-          {discountPrice ? (
-            <>
-              <p><del>Price: ${price}</del></p>
-              <p>Discount price: ${discountPrice}</p>
-            </>
-          ) : (
-            <p>Price: ${price}</p>
-          )}
-          <button>Add to Cart</button>
-        </div>
-      );
-    }
-    /* <>
-      <p>{name}</p>
-      {discountPrice && (
-        <del><p>Price: ${price}</p></del>
-      )}
-      <p><del>Price: ${price}</del></p>
-      {discountPrice && (
-        <p>Discount price: ${discountPrice}</p>
-      )}
-      <button>Add to Cart</button>
-    </> 
-  );
-} */
-    /*
-    function App() {
-      return (
-        <>
-          <ProductDetails 
-            name="Cotton socks" 
-            price="10.90" 
-            discountPrice="5.45" 
-            imageSrc="cotton-socks.png"
-        />
-          <ProductDetails 
-            name="Tennis balls" 
-            price="6.00" 
-            imageSrc="tennis-balls.png"
-        />
-          <ProductDetails 
-            name="Plain T-Shirt" 
-            price="7.99" 
-            imageSrc="plain-t-shirt.png"
-        />
-        </>
-      );
-    }
+      .chat-message-robot {
+        display: flex;
+        align-items: start;
+      }
 
-    const container = document.querySelector('.js-container');
-    ReactDOM.createRoot(container).render(<App />); */
+      .chat-message-text {
+        background-color: rgb(238, 238, 238);
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin: 10px 20px 10px;
+        max-width: 300px;
+      }
 
-    /*
-    function App() {
-      return (
-        <>
-          <p>Hello, welcome to my website</p>
-          <div>
-            <input type="text" placeholder="Email" />
-          </div>
-          <div>
-            <input type="password" placeholder="Password" />
-          </div>
-          <button>Login</button>
-          <button>Sign up</button>
-        </>
-      );
-    } */
+      .chat-message-profile {
+        width: 45px;
+      }
 
-    /*
-    function LoginForm() {
-      return (
-        <>
-          <div>
-            <input type="text" placeholder="Email" />
-          </div>
-          <div>
-            <input type="password" placeholder="Password" />
-          </div>
-          <button>Login</button>
-          <button>Sign up</button>
-        </>
-      );
-    }
+      .chat-messages-container {
+        flex-grow: 1;
+        margin-top: 20px;
+        overflow: scroll;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
 
-    function App() {
-      return (
-        <>
-          <p>Hello, welcome to my website</p>
-          <LoginForm />
-        </>
-      );
-    }
+  <body>
+    <div class="js-container"></div>
 
-    const container = document.querySelector('.js-container');
-    ReactDOM.createRoot(container).render(<App />); */
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
 
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
-    function Chatbot() {
-      return (
-        <>
-          <input
-            placeholder="Send a message to Chatbot"
-            size="30"
-          />
-          <button>Send</button>
-        </>
-      );
-    }
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
 
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+      function ChatInput({ chatMessages, setChatMessages }) {
+        const [inputText, setInputText] = React.useState("");
 
-    function ChatMessage({ message, sender }) {
-      // console.log(props);
-      // const message = props.message; //to access message attribute
-      // const sender = props.sender;
-      // const { message, sender } = props;
+        function saveInputText(event) {
+          setInputText(event.target.value);
+          // console.log(inputText);
+        }
 
+        function sendMessage() {
+          const newChatMessages = [
+            ...chatMessages,
+            {
+              message: inputText,
+              sender: "user",
+              id: crypto.randomUUID(),
+            },
+          ];
 
-      if (sender === 'robot') {
+          setChatMessages(newChatMessages);
+
+          const response = Chatbot.getResponse(inputText);
+          // console.log(response);
+          setChatMessages([
+            ...newChatMessages,
+            {
+              message: response,
+              sender: "robot",
+              id: crypto.randomUUID(),
+            },
+          ]);
+
+          setInputText("");
+        }
+
         return (
-          <div>
-            <img src="robot.png" width="50" />
-            {message}
+          <div className="chat-input-container">
+            <input
+              placeholder="Send a message to Chatbot"
+              size="30"
+              onChange={saveInputText}
+              value={inputText}
+              className="chat-input"
+            />
+            <button onClick={sendMessage} className="send-button">
+              Send
+            </button>
           </div>
         );
       }
 
-
-      return (
-        <div>
-          {sender === 'robot' && (
-            <img src="robot.png" width="50" />
-          )}
-          {message}
-          {sender === 'user' && (
-            <img src="user.png" width="50" />
-          )}
-        </div>
-      );
-    }
-
-    function ChatMessages() {
-    
-      const [ chatMessages, setChatMessages ] = React.useState([{
-        message: 'hello chatbot',
-        sender: 'user',
-        id: 'id1'
-      },
-      {
-        message: 'Hello! How can I help you?',
-        sender: 'robot',
-        id: 'id2'
-      },
-      {
-        message: 'can you get me todays date?',
-        sender: 'user',
-        id: 'id3'
-      },
-      {
-        message: 'Today is July 29',
-        sender: 'robot',
-        id: 'id4'
-      }]);
-      // const [ chatMessages, setChatMessages ] = array;
-      // const chatMessages = array[0];
-      // const setChatMessages = array[1];
-
-      function sendMessage() {
-        setChatMessages([
-          ...chatMessages,
-          {
-            message: 'test',
-            sender: 'user',
-            id: crypto.randomUUID()
-          }
-        ])
+      function ChatMessage({ message, sender }) {
+        return (
+          <div
+            className={
+              sender === "user" ? "chat-message-user" : "chat-message-robot"
+            }
+          >
+            {sender === "robot" && (
+              <img src="robot.png" className="chat-message-profile" />
+            )}
+            <div className="chat-message-text">{message}</div>
+            {sender === "user" && (
+              <img src="user.png" className="chat-message-profile" />
+            )}
+          </div>
+        );
       }
 
-      return (
-        <>
-          <button onClick={sendMessage}>Send Message</button>
+      function ChatMessages({ chatMessages }) {
+        const chatMessagesRef = React.useRef()
 
-          {chatMessages.map((chatMessage) => {
-            return (
-              <ChatMessage
-                message={chatMessage.message}
-                sender={chatMessage.sender}
-                key={chatMessage.id}
-              />
-            );
-          })}
-        </>
-      );
-    };
+        React.useEffect(() => {
+          const containerElem = chatMessagesRef.current;
+          if (containerElem) {
+            containerElem.scrollTop = containerElem.scrollHeight;
+          }
+        }, [chatMessages]);
+        return (
+          <div className="chat-messages-container" ref={chatMessagesRef}>
+            {chatMessages.map((chatMessage) => {
+              return (
+                <ChatMessage
+                  message={chatMessage.message}
+                  sender={chatMessage.sender}
+                  key={chatMessage.id}
+                />
+              );
+            })}
+          </div>
+        );
+      }
 
+      function App() {
+        const [chatMessages, setChatMessages] = React.useState([
+          {
+            message: "hello chatbot",
+            sender: "user",
+            id: "id1",
+          },
+          {
+            message: "Hello! How can i help you?",
+            sender: "robot",
+            id: "id2",
+          },
+          {
+            message: "can you get me todays date?",
+            sender: "user",
+            id: "id3",
+          },
+          {
+            message: "Today is September 27",
+            sender: "robot",
+            id: "id4",
+          },
+        ]);
 
-    function App() {
-      return (
-        <>
-          <Chatbot />
-          <ChatMessages />
-        </>
-      );
-    }
+        return (
+          <div className="app-container">
+            <ChatMessages chatMessages={chatMessages} />
+            <ChatInput
+              chatMessages={chatMessages}
+              setChatMessages={setChatMessages}
+            />
+          </div>
+        );
+      }
 
-    const container = document.querySelector('.js-container');
-    // ReactDOM.createRoot(container).render('Welcome to SuperSimpleDev React Course');
-    ReactDOM.createRoot(container).render(<App />);
-
-  </script>
-</body>
-
+      const container = document.querySelector(".js-container");
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
 </html>

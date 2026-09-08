@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Challenge exercise</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        p {
+            font-size: 20px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .inputField {
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 15px;
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        .password-btn {
+            margin-left: 20px;
+            background-color: #f0f0f0;
+            font-size: 15px;
+            /* border: 1px solid #ccc; */
+            outline: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-field {
+            background-color: rgb(0, 123, 255);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+        function LoginForm() {
+            const [ showPassword, setShowPassword ] = React.useState(false);
+
+            function handleClick() {
+                setShowPassword(!showPassword);
+            }
+
+            return (
+                <form>
+                    <div className="input-container">
+                        <input 
+                            type="text" 
+                            placeholder="Username" 
+                            className="inputField" 
+                        />
+                    </div>
+
+                    <div className="input-container">
+                        <input 
+                            type="email" 
+                            placeholder="Email" 
+                            className="inputField"
+                        />    
+                    </div>
+                    
+                    <div className="input-container password-container">
+                        <input 
+                            type={showPassword ? 'text' : 'password'} 
+                            placeholder="Password" 
+                            className="inputField"/>
+
+                        <button 
+                            type="button"
+                            className="password-btn"
+                            onClick={handleClick}
+                        >
+                            {showPassword ? 'Show' : 'Hide'}
+                        </button>
+                    </div>
+
+                    <div className="button-container">
+                        <button type="submit" className="btn-field">Login</button>    
+                        <button type="submit" className="btn-field">Signup</button>    
+                    </div>
+                </form>
+            );
+        }
+
+        function App() {
+            return (
+                <>
+                    <p>Hello, welcome to my website</p>
+                    <LoginForm />
+                </>
+            );
+        }
+
+        const container = document.querySelector(".js-container");
+        ReactDOM.createRoot(container).render(<App />);
+
+    </script>
+</body>
+
+</html>

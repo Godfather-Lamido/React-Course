@@ -4,26 +4,20 @@
 <head>
     <title>CreateButton</title>
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
-
-        .inputButton {
-            color: white;
-            padding: 12px 20px; 
+        .btn {
+            padding: 12px 20px;
             border-radius: 5px;
             outline: none;
             border: none;
             cursor: pointer;
+            color: white;
+        }  
+            
+        .btn-on {
+            background-color: rgb(25, 135,84);
         }
 
-        .button-on {
-            background-color: rgb(25, 135, 84);
-        }
-
-        .button-off {
+        .btn-off {
             background-color: rgb(220, 53, 69);
         }
 
@@ -43,22 +37,21 @@
     <script type="text/babel">
 
         function CreateButton() {
-            const [ buttonOn, setButtonOff ] = React.useState(false);
+            const [ isButtonOn, setIsButtonOn ] = React.useState(false)
 
             function handleClick() {
-                setButtonOff(!buttonOn)
+                setIsButtonOn(!isButtonOn)
             }
 
             return (
-                <button
-                className={buttonOn ? "inputButton button-on" : "inputButton button-off"}
-                onClick={handleClick}
-                >
-                {buttonOn ? "ON" : "OFF"}
+                <button 
+                    className={isButtonOn ? "btn btn-on" : "btn btn-off"}
+                    onClick={handleClick}
+                >Hide
+                {isButtonOn ? "ON" : "OFF"}
                 </button>
             );
         }
-
 
         const container = document.querySelector(".js-container");
         ReactDOM.createRoot(container).render(<CreateButton />);

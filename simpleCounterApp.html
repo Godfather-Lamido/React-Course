@@ -12,18 +12,36 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-      function SimpleCounter() {
-        const [count, setCount] = React.useState("");
 
-        function sendMessage() {
-          console.log("clicked");
-        }
+      function Counter ({ count, setCount}) {        
 
-        return <button onClick={sendMessage}>Clicked 1 times</button>;
+        function handleClick() {
+          console.log("clicked")
+          setCount(count + 1)
       }
 
+      return (
+        <button
+          onClick={handleClick}
+        >
+          Clicked {count} {count === 1 ? "time" : "times"}
+        </button>
+      )
+    }
+    
+    function App() {
+      const [ count, setCount ] = React.useState(0)
+      
+      return (
+        <>
+          <Counter count={count} setCount={setCount} />
+          <Counter count={count} setCount={setCount} />
+        </>
+      );
+    }
+
       const container = document.querySelector(".js-container");
-      ReactDOM.createRoot(container).render(<SimpleCounter />);
+      ReactDOM.createRoot(container).render(<App />);
     </script>
   </body>
 </html>

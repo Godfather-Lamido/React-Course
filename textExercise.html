@@ -12,22 +12,23 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
+ 
+      function App() {
+        const [ text, setText ] = React.useState("")
 
+        function handleChange(e) {
+          setText(e.target.value)
+        }
 
-    function App() {
-      const [ text, setText ] = React.useState('')
-
-      function handleChange(event){
-        setText(event.target.value);
-      }
-
-      return (
-            <>
-            <input onChange={handleChange} />
+        return (
+          <>
+            <input
+              onChange={handleChange}
+            />
             <p>Hello {text} </p>
-            </>
+          </>
         )
-    }
+      }
 
       const container = document.querySelector(".js-container");
       ReactDOM.createRoot(container).render(<App />);

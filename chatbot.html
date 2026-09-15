@@ -89,13 +89,22 @@
 
     function ChatInput({ chatMessages, setChatMessages }) {
       const [inputText, setInputText] = React.useState("");
+      const [ isLoading, setIsLoading ] = React.useState(false);
 
       function saveInputText(event) {
         setInputText(event.target.value);
         // console.log(inputText);
       }
 
-      function sendMessage() {
+      async function sendMessage() {
+        if (isLoading) {
+          return;
+        }
+
+        if (inputText === "") {
+          return;
+        }
+
         const newChatMessages = [
           ...chatMessages,
           {
@@ -106,8 +115,21 @@
         ];
 
         setChatMessages(newChatMessages);
+        setInputText("");
+        setIsLoading(true);
 
-        const response = Chatbot.getResponse(inputText);
+        const loadingMessage = {
+          message: "loading...",
+          sender: "robot",
+          id: crypto.randomUUID()
+        };
+
+        setChatMessages([
+          ...newChatMessages,
+          loadingMessage,
+        ]);
+
+        const response = await Chatbot.getResponseAsync(inputText);
         // console.log(response);
         setChatMessages([
           ...newChatMessages,
@@ -118,7 +140,16 @@
           },
         ]);
 
-        setInputText("");
+      }
+
+      function handleEnter(e) {
+        if (e.key === "Enter") {
+          sendMessage();
+        }
+
+        if (e.key === "Escape") {
+          setInputText("")
+        }
       }
 
         return (
@@ -129,8 +160,12 @@
               onChange={saveInputText}
               value={inputText}
               className="chat-input"
+              onKeyDown={handleEnter}
             />
-            <button onClick={sendMessage} className="send-button">
+            <button 
+              onClick={sendMessage} 
+              className="send-button"
+            >
               Send
             </button>
           </div>

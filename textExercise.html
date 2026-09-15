@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Simple Counter App</title>
-
   </head>
   <body>
     <div class="js-container"></div>
@@ -12,22 +11,29 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
- 
       function App() {
-        const [ text, setText ] = React.useState("")
+        const [text, setText] = React.useState("");
 
         function handleChange(e) {
-          setText(e.target.value)
+          setText(e.target.value);
+        }
+
+        function handleReset() {
+          setText("");
+        }
+
+        function handleExample() {
+          setText("Alice");
         }
 
         return (
           <>
-            <input
-              onChange={handleChange}
-            />
+            <input onChange={handleChange} value={text} />
+            <button onClick={handleReset}>Reset</button>
+            <button onClick={handleExample}>Example</button>
             <p>Hello {text} </p>
           </>
-        )
+        );
       }
 
       const container = document.querySelector(".js-container");

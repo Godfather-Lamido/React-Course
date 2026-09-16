@@ -1,16 +1,26 @@
-import { useState } from 'react'
-import { Chatbot } from 'supersimpledev';
-import './ChatInput.css';
+import { useState } from "react";
+import { Chatbot } from "supersimpledev";
+import LoadingSpinner from "../assets/loading-spinner.gif"
+import "./ChatInput.css";
 
 export function ChatInput({ chatMessages, setChatMessages }) {
   const [inputText, setInputText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function saveInputText(event) {
     setInputText(event.target.value);
     // console.log(inputText);
   }
 
-  function sendMessage() {
+  async function sendMessage() {
+    if (isLoading) {
+      return;
+    }
+
+    if (inputText === "") {
+      return;
+    }
+
     const newChatMessages = [
       ...chatMessages,
       {
@@ -21,8 +31,21 @@ export function ChatInput({ chatMessages, setChatMessages }) {
     ];
 
     setChatMessages(newChatMessages);
+    setInputText("");
+    setIsLoading(true);
 
-    const response = Chatbot.getResponse(inputText);
+    const loadingMessage = {
+      message: (
+        <img src={LoadingSpinner} style={{ height: "40px", margin: "-15px"}} 
+        />
+      ),
+      sender: "robot",
+      id: crypto.randomUUID(),
+    };
+    
+    setChatMessages([...newChatMessages, loadingMessage]);
+
+    const response = await Chatbot.getResponseAsync(inputText);
     // console.log(response);
     setChatMessages([
       ...newChatMessages,
@@ -33,7 +56,17 @@ export function ChatInput({ chatMessages, setChatMessages }) {
       },
     ]);
 
-    setInputText("");
+    setIsLoading(false);
+  }
+
+  function handleEnter(e) {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+
+    if (e.key === "Escape") {
+      setInputText("");
+    }
   }
 
   return (
@@ -44,6 +77,7 @@ export function ChatInput({ chatMessages, setChatMessages }) {
         onChange={saveInputText}
         value={inputText}
         className="chat-input"
+        onKeyDown={handleEnter}
       />
       <button onClick={sendMessage} className="send-button">
         Send

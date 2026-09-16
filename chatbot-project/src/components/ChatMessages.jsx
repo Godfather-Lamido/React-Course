@@ -1,19 +1,18 @@
-import { useRef, useEffect } from 'react'
-import { ChatMessage} from './ChatMessage'
-import './ChatMessages.css';
-
+import { ChatMessage } from "./ChatMessage";
+import { useAutoscroll } from "../hooks/useAutoscroll";
+import "./ChatMessages.css";
 
 function ChatMessages({ chatMessages }) {
-  const chatMessagesRef = useRef();
+  const chatMessagesRef = useAutoscroll([chatMessages]);
 
-  useEffect(() => {
-    const containerElem = chatMessagesRef.current;
-    if (containerElem) {
-      containerElem.scrollTop = containerElem.scrollHeight;
-    }
-  }, [chatMessages]);
   return (
     <div className="chat-messages-container" ref={chatMessagesRef}>
+      {chatMessages.length === 0 && (
+        <div className="welcome-message">
+          welcome to the chatbot project! send a message using the textbox below
+        </div>
+      )}
+      
       {chatMessages.map((chatMessage) => {
         return (
           <ChatMessage

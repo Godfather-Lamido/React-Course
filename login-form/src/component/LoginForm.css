@@ -1,0 +1,38 @@
+
+.input-container {
+            margin-bottom: 20px;
+        }
+
+        .inputField {
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 15px;
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        .password-btn {
+            margin-left: 20px;
+            background-color: #f0f0f0;
+            font-size: 15px;
+            /* border: 1px solid #ccc; */
+            outline: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-field {
+            background-color: rgb(0, 123, 255);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }

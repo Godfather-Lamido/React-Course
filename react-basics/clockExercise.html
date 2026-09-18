@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Counter App</title>
+    <title>Clock Exercise</title>
     <style>
 
 
@@ -21,12 +21,18 @@
     <script type="text/babel">
 
         function App() {
+            const [ currentTime, setCurrentTime ] = React.useState(dayjs().format('HH:mm:ss'));
+
+            React.useEffect(() => {
+                setInterval(() => {
+                    const newTime = dayjs().format('HH:mm:ss');
+                    setCurrentTime(newTime);
+                    // console.log('run code')
+                }, 1000)
+            }, [])
+
             return (
-                <button
-                    className="reset-btn"
-                >
-                Reset
-                </button>
+                <p>Current Time: {currentTime}</p>
             )
         } 
 

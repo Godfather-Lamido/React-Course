@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Simple Counter App</title>
+    <style>
+        .btn-parent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            height: 100vh;
+            background-color: rgb(222, 222, 222);
+        }
+
+        .btn {
+            background-color: rgb(25, 135, 84);
+            outline: none;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+        }
+    </style>
+  </head>
+  <body>
+
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+    function App() {
+        const [ count, setCount ] = React.useState(0);
+        const buttonElem = React.useRef();
+
+        function handleClick() {
+            setCount(count + 1);
+        }
+
+        function handleReset() {
+            setCount(0);
+        }
+
+        function autoClick() {
+            setInterval(() => {
+                buttonElem.current.click();
+            }, 1000);
+        }
+
+        return (
+            <div className="btn-parent">
+                <button 
+                    onClick={handleClick} 
+                    ref={buttonElem}
+                    className="btn"
+                >
+                    Clicked {count} times
+                </button>
+                <button 
+                    onClick={handleReset} 
+                    className="btn" 
+                >
+                    Reset
+                </button>
+                <button 
+                    onClick={autoClick} 
+                    className="btn" 
+                >
+                    Auto Click
+                </button>
+            </div>
+        )
+    }
+
+    const container = document.querySelector(".js-container");
+    ReactDOM.createRoot(container).render(<App />);
+    
+    </script>
+  </body>
+</html>

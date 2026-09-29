@@ -11,9 +11,6 @@ export function HomePage({ cart }) {
     .then((response) => {
       setProducts(response.data);
     });
-
-
-
   }, []);
 
   return (

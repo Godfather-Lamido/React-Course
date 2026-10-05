@@ -1,0 +1,36 @@
+.hero {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: blue;
+    padding: 40px;
+}
+
+.hero-content{
+    display: flex;
+    height: 400px;
+    position: relative;
+    width: 30%
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.hero-text h1,
+.hero-text p {
+    margin: 0;
+}
+
+.hero-text h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.hero-label {
+    font-size: 14px;
+    color: orange;
+}
+
